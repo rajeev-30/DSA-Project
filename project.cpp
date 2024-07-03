@@ -103,15 +103,31 @@ void Library::returnBook(int id) {
 }
 
 void Library::listAllBooks() {
-    cout<<"Total books: "<<books.size()<<"\n";
     if(books.empty()){
         cout<<"No book is available.\n";
+        return;
     }
-    sortBooksById(); 
-    for (auto& book : books) {
-        cout << "ID: " << book.id << ", Title: " << book.title 
-             << ", Author: " << book.author 
-             << (book.isIssued ? " (Issued)" : " (Available)") << "\n";
+    
+    int choise;
+    cout<<"1: sort by ID \n";
+    cout<<"2: sort by Title \n";
+    cout<<"Enter your choise: ";
+    cin>>choise;
+    cout<<"Total books: "<<books.size()<<"\n";
+    if(choise==1){
+        sortBooksById(); 
+        for (auto& book : books) {
+            cout << "ID: " << book.id << ", Title: " << book.title 
+                 << ", Author: " << book.author 
+                 << ", Status:"<<(book.isIssued ? " (Issued)" : " (Available)") << "\n";
+        }
+    }else{
+        sortBooksByTitle(); 
+        for (auto& book : books) {
+            cout << "ID: " << book.id << ", Title: " << book.title 
+                 << ", Author: " << book.author 
+                 <<", Status:"<< (book.isIssued ? " (Issued)" : " (Available)") << "\n";
+        }
     }
 }
 
@@ -163,9 +179,9 @@ int main() {
     Library library;
     int choice, id;
     string title, author, studentName;
-
+    cout<<"-WELCOME TO THE LIBRARY-\n";
     do {
-        cout << "\nLibrary Management System\n";
+        cout << "\nPlease Choose an appropriate option below:\n";
         cout << "1. Add New Book\n";
         cout << "2. Search Book by ID\n";
         cout << "3. Search Book by Title\n";
@@ -176,6 +192,7 @@ int main() {
         cout << "0. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
+        cout<<endl;
 
         switch (choice) {
             case 1:
@@ -221,7 +238,7 @@ int main() {
                 library.deleteBook(id);
                 break;
             case 0:
-                cout << "Exiting...\n";
+                cout << "Thank you for using our Library Management System!\n";
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
